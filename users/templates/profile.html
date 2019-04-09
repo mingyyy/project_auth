@@ -1,6 +1,67 @@
 {% extends 'base.html' %}
 {% block content%}
-<h5>profile page</h5>
 
+<div class="content-section">
+{% if user.is_authenticated %}
+    <legend class="border-bottom mb-4">
+        <h3> Hello {{user.username.title}}! Welcome to Top Stories of NYT. </h3>
+    </legend>
+    <form class="form-inline" method="post"> {% csrf_token%}
+        {% if user.profile.api_key %}
+        <div class="col-md-6">
+            <span class="align-text-bottom">
+                Well done! You have a 32 digits API key with us.
+            </span>
+        </div>
+        {% endif %}
+        <div class="col-md-4">
+            <select name="sections" class="custom-select">
+                <option selected>Select the sections of your interest</option>
+                  {% for s in sections %}
+                    <option value="{{s}}">{{s}}</option>
+                  {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-2">
+            <input class="btn btn-secondary btn-lg" type="submit" value="Submit"/>
+
+       </div>
+    </form>
+    <p class="border-top mb-8"><a href="{% url 'logout' %}"> - Log Out -</a></p>
+{% endif %}
+</div>
+
+<div class="container">
+    <div class="col-md-12">
+    <table class="table table-striped">
+
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Abstract</th>
+        <th>URL</th>
+      </tr>
+    </thead>
+
+    <tbody>
+    {% for a_list in articles %}
+        <tr>
+            {% for k, v in a_list.items %}
+            <td>
+                {% if k == "url" %}
+                    <a href="{{v}}">{{v}}</a>
+                {% elif k == "abstract" %}
+                    <span class="font-weight-light">{{v}}</span>
+                {% else %}
+                    <span class="font-italic">{{v}}</span>
+                {% endif %}
+            </td>
+            {% endfor %}
+        </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+    </div>
+    </div>
 
 {% endblock%}

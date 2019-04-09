@@ -1,6 +1,27 @@
 {% extends 'base.html' %}
 {% block content%}
-<h5>Front page</h5>
+
+<br>
+<div class="content-section">
+{% if user.is_authenticated %}
+    <h3>Welcome to this page, {{user.username.title}}!</h3>
+    <br>
+<p class="border-top mb-10">Now you can go read <a href="{% url 'users:profile' %}">NYT</a> top stories.</p>
+{% else %}
+    <h5>Please Log in first if you have an account. </h5>
+    <br>
+    {% if form.errors %}
+    <p>Your username and password didn't match. Please try again.</p>
+    {% endif %}
+
+    <form action="{% url 'users:frontpage' %}" method = "post">
+        {%csrf_token%}
+        {{form.as_p}}
+        <button name="submit">Sign in</button>
+    </form>
+{% endif %}
+
+</div>
 
 
 {% endblock%}

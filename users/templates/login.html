@@ -1,17 +1,17 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h5>Please login first. It only takes a few seconds. </h5>
+    <h5>Please sign in first. It only takes a few seconds. </h5>
     <br>
     {% if form.errors %}
     <p>Your username and password didn't match. Please try again.</p>
     {% endif %}
 
-    <form action="{% url 'users:login' %}" method = "post">
+    <form action="{% url 'users:login' %}" method = "get">
     {% csrf_token %}
     {{ form.as_p}}
 
-    <button name="submit">Log in</button>
+    <button name="submit">Sign in</button>
     <input type="hidden" name="next" value="{% url 'users:frontpage'%}">
 
     </form>

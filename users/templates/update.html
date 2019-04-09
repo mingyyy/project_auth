@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content%}
+<h4>Thank you for trusting us with your key.</h4>
+<br>
+
+<form method="post">
+  {% csrf_token %}
+  {{ user_form.as_p }}
+  {{ profile_form.as_p }}
+  <button type="submit">Update your profile</button>
+</form>
+
+
+{% endblock%}

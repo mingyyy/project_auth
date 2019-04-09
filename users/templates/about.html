@@ -1,6 +1,22 @@
 {% extends 'base.html' %}
 {% block content%}
-<h5>About page</h5>
+<br>
+<div class="container">
+<h5>{{user.username.title}}'s profile</h5>
+</div>
+<br>
+{% if user.is_authenticated%}
+    {% for p in profile.values %}
+        {% if user.id == p.id %}
+            <ul class="list-group">
+              <li class="list-group-item"><span class="font-weight-light">First Name:</span> {{user.first_name.title}}</li>
+              <li class="list-group-item"><span class="font-weight-light">Last Name:</span> {{user.last_name.title}}</li>
+              <li class="list-group-item"><span class="font-weight-light">Email: </span> {{user.email}}</li>
+              <li class="list-group-item"><span class="font-weight-light">API KEY: </span> {{p.api_key}}</li>
+            </ul>
 
+        {% endif %}
+    {% endfor %}
+{% endif %}
 
 {% endblock%}
